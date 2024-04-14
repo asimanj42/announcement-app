@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 13-04-2024-create-user-table
+      runOrder: first
+      author: asiman
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: VARCHAR
+              - column:
+                  name: surname
+                  type: VARCHAR
+              - column:
+                  name: username
+                  type: VARCHAR
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR
+              - column:
+                  name: age
+                  type: BIGINT

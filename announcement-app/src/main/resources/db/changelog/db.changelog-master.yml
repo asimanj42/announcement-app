@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - includeAll:
+      path: /db/changelog/v1/
+  # Compare this snippet from src/main/resources/application-liquibase.yml

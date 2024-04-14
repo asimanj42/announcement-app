@@ -1,0 +1,40 @@
+databaseChangeLog:
+  - changeSet:
+      id: 13-04-2024-create-users-role-table
+      author: asiman
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: role_id
+                  type: BIGINT
+
+  - changeSet:
+      id: 13-04-2024-foreign-key-user-id
+      author: asiman
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_roles
+            baseColumnNames: user_id
+            constraintName: fk_user_roles_user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+  - changeSet:
+      id: 13-04-2024-foreign-key-role-id
+      author: asiman
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: user_roles
+            baseColumnNames: role_id
+            constraintName: fk_user_roles_role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+
