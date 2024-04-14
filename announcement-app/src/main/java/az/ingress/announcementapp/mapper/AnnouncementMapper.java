@@ -2,7 +2,7 @@ package az.ingress.announcementapp.mapper;
 
 import az.ingress.announcementapp.dto.announcement.AnnouncementRequest;
 import az.ingress.announcementapp.dto.announcement.AnnouncementResponse;
-import az.ingress.announcementapp.dto.announcementdetail.AnnouncementDetailResponse;
+import az.ingress.announcementapp.dto.announcementdetail.AnnouncementDetailResponseDto;
 import az.ingress.announcementapp.entity.Announcement;
 import az.ingress.announcementapp.entity.AnnouncementDetail;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,6 @@ public class AnnouncementMapper {
 
     public Announcement mapAnnouncementRequestToEntity(AnnouncementRequest announcementRequest) {
         return Announcement.builder()
-                .viewCount(announcementRequest.getViewCount())
                 .announcementDetail(AnnouncementDetail.builder()
                         .title(announcementRequest.getAnnouncementDetail().getTitle())
                         .description(announcementRequest.getAnnouncementDetail().getDescription())
@@ -29,7 +28,7 @@ public class AnnouncementMapper {
                 .id(announcement.getId())
                 .viewCount(announcement.getViewCount())
                 .userId(announcement.getUser().getId())
-                .announcementDetail(AnnouncementDetailResponse.builder()
+                .announcementDetail(AnnouncementDetailResponseDto.builder()
                         .id(announcement.getAnnouncementDetail().getId())
                         .title(announcement.getAnnouncementDetail().getTitle())
                         .description(announcement.getAnnouncementDetail().getDescription())

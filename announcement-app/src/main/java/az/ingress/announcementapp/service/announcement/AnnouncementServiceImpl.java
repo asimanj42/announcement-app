@@ -4,8 +4,8 @@ import az.ingress.announcementapp.dto.announcement.AnnouncementRequest;
 import az.ingress.announcementapp.dto.announcement.AnnouncementResponse;
 import az.ingress.announcementapp.dto.pagination.PageResponse;
 import az.ingress.announcementapp.entity.Announcement;
-import az.ingress.announcementapp.entity.AnnouncementDetail;
 import az.ingress.announcementapp.entity.User;
+import az.ingress.announcementapp.exception.type.BaseException;
 import az.ingress.announcementapp.mapper.AnnouncementMapper;
 import az.ingress.announcementapp.mapper.PageResponseMapper;
 import az.ingress.announcementapp.repository.AnnouncementDetailRepository;
@@ -20,6 +20,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Supplier;
+
+import static az.ingress.announcementapp.dto.enums.response.ErrorMessages.ANNOUNCEMENT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -32,23 +35,94 @@ public class AnnouncementServiceImpl implements AnnouncementService {
 
     @Override
     public AnnouncementResponse createAnnouncement(AnnouncementRequest announcementRequest) {
-
         Announcement announcement = announcementMapper.mapAnnouncementRequestToEntity(announcementRequest);
         announcement.setUser(getLoggedInUser());
         announcementDetailRepository.save(announcement.getAnnouncementDetail());
         Announcement savedAnnouncement = announcementRepository.save(announcement);
         return announcementMapper.mapAnnouncementEntityToResponse(savedAnnouncement);
-
     }
 
     @Override
     public PageResponse<AnnouncementResponse> findAllWithSpecification(List<SearchCriteria> searchCriteriaList, Pageable pageable) {
-
         SearchSpecification<Announcement> searchSpecification = new SearchSpecification<>(searchCriteriaList);
         Page<Announcement> announcements = announcementRepository.findAll(searchSpecification, pageable);
         Page<AnnouncementResponse> announcementResponses = mapPageAnnouncementEntityToPageAnnouncementResponse(announcements);
-
         return getCustomAnnouncementResponsePage(announcementResponses);
+    }
+
+    @Override
+    public AnnouncementResponse updateAnnouncement(Long id, AnnouncementRequest announcementRequest) {
+        Announcement announcement = checkAnnouncementExistingGivenId(id);
+        Announcement updatedAnnouncement = updateIfNotNull(announcementRequest, announcement);
+        updatedAnnouncement.setId(id);
+        Announcement savedNewAnnouncement = announcementRepository.save(updatedAnnouncement);
+        return announcementMapper.mapAnnouncementEntityToResponse(savedNewAnnouncement);
+    }
+
+    @Override
+    public AnnouncementResponse deleteAnnouncement(Long id) {
+        Announcement announcement = checkAnnouncementExistingGivenId(id);
+        announcementRepository.delete(announcement);
+        return announcementMapper.mapAnnouncementEntityToResponse(announcement);
+    }
+
+    //TODO: Implement the redis cache for this method
+    @Override
+    public PageResponse<AnnouncementResponse> getAllOwnAnnouncement(Pageable pageable) {
+        User user = getLoggedInUser();
+        Page<Announcement> announcements = announcementRepository.findAllByUser(user, pageable);
+        Page<AnnouncementResponse> announcementResponses = mapPageAnnouncementEntityToPageAnnouncementResponse(announcements);
+        return getCustomAnnouncementResponsePage(announcementResponses);
+    }
+
+    @Override
+    public AnnouncementResponse getAnnouncementById(Long id) {
+        Announcement announcement = checkAnnouncementExistingGivenId(id);
+        announcement.setViewCount(announcement.getViewCount() + 1);
+        announcementRepository.save(announcement);
+        return announcementMapper.mapAnnouncementEntityToResponse(announcement);
+    }
+
+    @Override
+    public AnnouncementResponse getOwnAnnouncementWithId(Long id) {
+        User user = getLoggedInUser();
+        Announcement announcement = announcementRepository.findByIdAndUser(id, user).orElseThrow(supplierAnnouncementNotFoundException());
+        return announcementMapper.mapAnnouncementEntityToResponse(announcement);
+    }
+
+    @Override
+    public AnnouncementResponse getOwnMostViewedAnnouncement() {
+        User user = getLoggedInUser();
+        Announcement announcement = announcementRepository.findTopByUserOrderByViewCountDesc(user).orElseThrow(supplierAnnouncementNotFoundException());
+        return announcementMapper.mapAnnouncementEntityToResponse(announcement);
+    }
+
+    @Override
+    public PageResponse<AnnouncementResponse> getMostViewedAnnouncements(Pageable pageable) {
+        Page<Announcement> announcements = announcementRepository.findMostViewedAnnouncements(pageable);
+        Page<AnnouncementResponse> announcementResponses = mapPageAnnouncementEntityToPageAnnouncementResponse(announcements);
+        return getCustomAnnouncementResponsePage(announcementResponses);
+    }
+
+    private Announcement checkAnnouncementExistingGivenId(Long id) {
+        return announcementRepository.findById(id).orElseThrow(supplierAnnouncementNotFoundException());
+    }
+
+    private Announcement updateIfNotNull(AnnouncementRequest announcementRequest, Announcement announcement) {
+        if (announcementRequest.getAnnouncementDetail().getTitle() != null) {
+            announcement.getAnnouncementDetail().setTitle(announcementRequest.getAnnouncementDetail().getTitle());
+        }
+        if (announcementRequest.getAnnouncementDetail().getDescription() != null) {
+            announcement.getAnnouncementDetail().setDescription(announcementRequest.getAnnouncementDetail().getDescription());
+        }
+        if (announcementRequest.getAnnouncementDetail().getPrice() != null) {
+            announcement.getAnnouncementDetail().setPrice(announcementRequest.getAnnouncementDetail().getPrice());
+        }
+        return announcement;
+    }
+
+    private Supplier<BaseException> supplierAnnouncementNotFoundException() {
+        return () -> BaseException.of(ANNOUNCEMENT_NOT_FOUND);
     }
 
     private Page<AnnouncementResponse> mapPageAnnouncementEntityToPageAnnouncementResponse(Page<Announcement> announcements) {

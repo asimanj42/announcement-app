@@ -25,7 +25,8 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
     private final String[] AUTH_WHITELIST = {
             "/api/auth/**",
-            "/api/announcements/search"
+            "/api/announcements/search",
+            "/api/announcements/most-viewed",
     };
 
     @Bean

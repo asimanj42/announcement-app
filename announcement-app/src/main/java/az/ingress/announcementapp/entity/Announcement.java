@@ -15,10 +15,10 @@ public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long viewCount;
+    private long viewCount;
 
     @ManyToOne
     private User user;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private AnnouncementDetail announcementDetail;
 }

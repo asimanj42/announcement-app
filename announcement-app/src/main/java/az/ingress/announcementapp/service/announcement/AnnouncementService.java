@@ -11,5 +11,15 @@ import java.util.List;
 public interface AnnouncementService {
 
     AnnouncementResponse createAnnouncement(AnnouncementRequest announcementRequest);
+
     PageResponse<AnnouncementResponse> findAllWithSpecification(List<SearchCriteria> searchCriteriaList, Pageable pageable);
+
+    AnnouncementResponse updateAnnouncement(Long id, AnnouncementRequest announcementRequest);
+
+    AnnouncementResponse deleteAnnouncement(Long id);
+    PageResponse<AnnouncementResponse> getAllOwnAnnouncement(Pageable pageable);
+    AnnouncementResponse getAnnouncementById(Long id);
+    AnnouncementResponse getOwnAnnouncementWithId(Long id);
+    AnnouncementResponse getOwnMostViewedAnnouncement();
+    PageResponse<AnnouncementResponse> getMostViewedAnnouncements(Pageable pageable);
 }

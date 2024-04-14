@@ -19,10 +19,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBaseException(BaseException ex,
                                                              HttpServletRequest request) {
         log.error("Exception occurred: ", ex);
-        return getErrorResponse(ex, request);
-    }
-
-    private static ResponseEntity<ErrorResponse> getErrorResponse(BaseException ex, HttpServletRequest request) {
         return new ResponseEntity<>(ErrorResponse.builder()
                 .status(ex.getResponseMessage().getHttpStatus())
                 .timestamp(LocalDateTime.now())

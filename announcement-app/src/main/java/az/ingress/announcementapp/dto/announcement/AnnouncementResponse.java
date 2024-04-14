@@ -1,6 +1,6 @@
 package az.ingress.announcementapp.dto.announcement;
 
-import az.ingress.announcementapp.dto.announcementdetail.AnnouncementDetailResponse;
+import az.ingress.announcementapp.dto.announcementdetail.AnnouncementDetailResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +15,5 @@ public class AnnouncementResponse {
     private Long id;
     private Long viewCount;
     private Long userId;
-    private AnnouncementDetailResponse announcementDetail;
+    private AnnouncementDetailResponseDto announcementDetail;
 }

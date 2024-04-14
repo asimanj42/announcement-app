@@ -27,8 +27,50 @@ public class AnnouncementController {
 
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
-    public PageResponse<AnnouncementResponse> findAll(@RequestBody List<SearchCriteria> searchCriteriaList, Pageable pageable) {
+    public PageResponse<AnnouncementResponse> findAllAnnouncement(@RequestBody List<SearchCriteria> searchCriteriaList, Pageable pageable) {
         return announcementService.findAllWithSpecification(searchCriteriaList, pageable);
+    }
+
+    @PutMapping("/{announcementId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AnnouncementResponse updateAnnouncement(@PathVariable("announcementId") Long announcementId, @RequestBody AnnouncementRequest announcementRequest) {
+        return announcementService.updateAnnouncement(announcementId, announcementRequest);
+    }
+
+    @DeleteMapping("/{announcementId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AnnouncementResponse deleteAnnouncement(@PathVariable("announcementId") Long announcementId) {
+        return announcementService.deleteAnnouncement(announcementId);
+    }
+
+    @GetMapping("/own")
+    @ResponseStatus(HttpStatus.OK)
+    public PageResponse<AnnouncementResponse> getAllOwnerAnnouncements(Pageable pageable) {
+        return announcementService.getAllOwnAnnouncement(pageable);
+    }
+
+    @GetMapping("/{announcementId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AnnouncementResponse getAnnouncementById(@PathVariable("announcementId") Long announcementId) {
+        return announcementService.getAnnouncementById(announcementId);
+    }
+
+    @GetMapping("/own/{announcementId}")
+    @ResponseStatus(HttpStatus.OK)
+    public AnnouncementResponse getOwnAnnouncementWithId(@PathVariable("announcementId") Long announcementId) {
+        return announcementService.getOwnAnnouncementWithId(announcementId);
+    }
+
+    @GetMapping("/own/most-viewed")
+    @ResponseStatus(HttpStatus.OK)
+    public AnnouncementResponse getOwnMostViewedAnnouncement() {
+        return announcementService.getOwnMostViewedAnnouncement();
+    }
+
+    @GetMapping("/most-viewed")
+    @ResponseStatus(HttpStatus.OK)
+    public PageResponse<AnnouncementResponse> getMostViewedAnnouncements(Pageable pageable) {
+        return announcementService.getMostViewedAnnouncements(pageable);
     }
 
 }

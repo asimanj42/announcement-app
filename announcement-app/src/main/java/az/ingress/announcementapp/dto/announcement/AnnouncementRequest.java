@@ -1,6 +1,6 @@
 package az.ingress.announcementapp.dto.announcement;
 
-import az.ingress.announcementapp.dto.announcementdetail.AnnouncementDetailRequest;
+import az.ingress.announcementapp.dto.announcementdetail.AnnouncementDetailRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AnnouncementRequest {
 
-    private Long viewCount;
-    private AnnouncementDetailRequest announcementDetail;
+    private AnnouncementDetailRequestDto announcementDetail;
 
 }
