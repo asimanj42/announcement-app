@@ -98,19 +98,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return getAnnouncementResponse(announcement);
     }
 
+    @Override
+    public PageResponse<AnnouncementResponse> getMostViewedAnnouncements(Pageable pageable) {
+        Page<Announcement> announcements = announcementRepository.findMostViewedAnnouncements(pageable);
+        Page<AnnouncementResponse> announcementResponses = mapPageAnnouncementEntityToPageAnnouncementResponse(announcements);
+        return getCustomAnnouncementResponsePage(announcementResponses);
+    }
+
     private User getLoggedInUser() {
         return securityConfig.getLoggedInUser();
     }
 
     private AnnouncementResponse getAnnouncementResponse(Announcement announcement) {
         return announcementMapper.mapAnnouncementEntityToResponse(announcement);
-    }
-
-    @Override
-    public PageResponse<AnnouncementResponse> getMostViewedAnnouncements(Pageable pageable) {
-        Page<Announcement> announcements = announcementRepository.findMostViewedAnnouncements(pageable);
-        Page<AnnouncementResponse> announcementResponses = mapPageAnnouncementEntityToPageAnnouncementResponse(announcements);
-        return getCustomAnnouncementResponsePage(announcementResponses);
     }
 
     private Announcement checkAnnouncementExistingGivenId(Long id) {
