@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "4cae73aa-aaaf-45ff-8d58-59cba5699398",
+		"name": "announcement-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34255921"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Asiman\",\r\n  \"surname\": \"Mammadli\",\r\n  \"username\": \"asiman42\",\r\n  \"password\": \"123456\",\r\n  \"age\": 19\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "announcement",
+			"item": [
+				{
+					"name": "createAnnouncement",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJmdWxsTmFtZSI6IkthcmwgTWFyeCIsInN1YiI6ImthcmxtYXJ4IiwiaWF0IjoxNzEzMDQ2MzUzLCJleHAiOjE3MTMwNTQ5OTMsImF1dGhvcml0aWVzIjpbIlVTRVIiXX0.EFVoXstH2TdnmqVHFmQoq4TUSqmIvWUIY34ycAwXPTzozn8Uy7oiNPnaL14TEHfT",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"viewCount\": 200,\r\n  \"announcementDetail\": {\r\n    \"title\": \"Nissan Note 2011 satis ve ya barter\",\r\n    \"description\": \"Nissan Note 2011 1.5 motor 48000 original probeg. Ideal veziyyetdedir. Barter maraqlidir\",\r\n    \"price\": \"13000\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/announcements/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllAnnouncement",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"key\": \"announcementDetail.description\",\r\n        \"value\": \"Mercedes w210 3.2 benzin 2000 17500 Azn\",\r\n        \"operation\": \"EQUAL\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/announcements/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAnnouncement",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"announcementDetail\": {\r\n    \"title\": \"title_0f69c848953b\",\r\n    \"description\": \"description_caeec2d396de\",\r\n    \"price\": \"price_151b000b11a9\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/announcements/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAnnouncement",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/announcements/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllOwnerAnnouncements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/announcements/own",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"own"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAnnouncementById",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getOwnAnnouncementWithId",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "getOwnMostViewedAnnouncement",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/announcements/own/most-viewed",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"own",
+								"most-viewed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMostViewedAnnouncements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/announcements/most-viewed",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"announcements",
+								"most-viewed"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

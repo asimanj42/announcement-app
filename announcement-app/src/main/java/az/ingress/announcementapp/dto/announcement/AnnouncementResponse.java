@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AnnouncementResponse {
+public class AnnouncementResponse implements Serializable {
 
     private Long id;
     private Long viewCount;
