@@ -7,7 +7,6 @@ enhancing communication efficiency within communities.
 
 - **Java** : The application is developed in the Java programming language.
 - **Spring Boot** : Utilized for rapid and straightforward application development.
-- **Spring Security** : Used for user authentication and authorization.
 - **Spring Data** : Employed for database operations.
 - **Spring Security** : Integrated for user authentication and authorization.
 - **JWT (JSON Web Token)** : Used for secure identity verification.
@@ -56,9 +55,6 @@ cd announcement-app
 
 Contributions are welcome! Please feel free to open a pull request or submit an issue for any bugs or feature requests.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
