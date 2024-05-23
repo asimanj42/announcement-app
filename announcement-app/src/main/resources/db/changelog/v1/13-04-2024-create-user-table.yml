@@ -28,5 +28,17 @@ databaseChangeLog:
                   name: password
                   type: VARCHAR
               - column:
-                  name: age
-                  type: BIGINT
+                  name: verification_code
+                  type: INTEGER
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+              - column:
+                  name: account_non_expired
+                  type: BOOLEAN
+              - column:
+                  name: account_non_locked
+                  type: BOOLEAN
+              - column:
+                  name: credentials_non_expired
+                  type: BOOLEAN

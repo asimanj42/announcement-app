@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 13-04-2024-create-role-table
+      id: 13-04-2024-create-authority-table
       author: asiman
       changes:
         - createTable:
-            tableName: roles
+            tableName: authorities
             columns:
               - column:
                   name: id
@@ -13,7 +13,5 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: name
+                  name: authority
                   type: VARCHAR
-                  constraints:
-                    unique: true

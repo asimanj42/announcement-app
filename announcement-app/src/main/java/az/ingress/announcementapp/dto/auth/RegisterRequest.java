@@ -12,5 +12,4 @@ public class RegisterRequest {
     private String surname;
     private String username;
     private String password;
-    private Long age;
 }

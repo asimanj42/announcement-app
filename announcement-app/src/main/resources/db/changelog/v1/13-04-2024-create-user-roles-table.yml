@@ -1,16 +1,16 @@
 databaseChangeLog:
   - changeSet:
-      id: 13-04-2024-create-users-role-table
+      id: 13-04-2024-create-users-authorities-table
       author: asiman
       changes:
         - createTable:
-            tableName: user_roles
+            tableName: user_authorities
             columns:
               - column:
                   name: user_id
                   type: BIGINT
               - column:
-                  name: role_id
+                  name: authority_id
                   type: BIGINT
 
   - changeSet:
@@ -18,22 +18,22 @@ databaseChangeLog:
       author: asiman
       changes:
         - addForeignKeyConstraint:
-            baseTableName: user_roles
+            baseTableName: user_authorities
             baseColumnNames: user_id
-            constraintName: fk_user_roles_user_id
+            constraintName: fk_user_authorities_user_id
             referencedTableName: users
             referencedColumnNames: id
             onDelete: CASCADE
             onUpdate: CASCADE
   - changeSet:
-      id: 13-04-2024-foreign-key-role-id
+      id: 13-04-2024-foreign-key-authority-id
       author: asiman
       changes:
         - addForeignKeyConstraint:
-            baseTableName: user_roles
-            baseColumnNames: role_id
-            constraintName: fk_user_roles_role_id
-            referencedTableName: roles
+            baseTableName: user_authorities
+            baseColumnNames: authority_id
+            constraintName: fk_user_authorities_authority_id
+            referencedTableName: authorities
             referencedColumnNames: id
             onDelete: CASCADE
             onUpdate: CASCADE

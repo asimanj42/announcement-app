@@ -18,8 +18,8 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public String register(@RequestBody RegisterRequest registerRequest) {
-        return authService.register(registerRequest);
+    public void register(@RequestBody RegisterRequest registerRequest) {
+        authService.register(registerRequest);
     }
 
 
@@ -27,6 +27,17 @@ public class AuthController {
     @ResponseStatus(HttpStatus.OK)
     public LoginResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
+    }
+
+    @PostMapping("/verification")
+    public void activate(@RequestParam("email") String email,
+                         @RequestParam("verificationCode") Integer verificationCode) {
+        authService.activate(email, verificationCode);
+    }
+
+    @PostMapping("/resendVerificationCode")
+    public void resendVerificationCode(@RequestParam("email") String email) {
+        authService.resendVerificationCode(email);
     }
 
 }

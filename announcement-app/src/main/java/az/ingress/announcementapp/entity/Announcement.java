@@ -19,6 +19,7 @@ public class Announcement {
 
     @ManyToOne
     private User user;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne
     private AnnouncementDetail announcementDetail;
 }

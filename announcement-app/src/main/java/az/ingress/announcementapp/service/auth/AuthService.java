@@ -6,5 +6,11 @@ import az.ingress.announcementapp.dto.auth.RegisterRequest;
 
 public interface AuthService {
     LoginResponse login(LoginRequest loginRequest);
-    String register(RegisterRequest registerRequest);
+
+    void register(RegisterRequest registerRequest);
+
+    void activate(String email, Integer verificationCode);
+
+    void resendVerificationCode(String email);
+
 }
